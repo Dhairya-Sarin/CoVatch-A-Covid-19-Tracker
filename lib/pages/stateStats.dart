@@ -31,13 +31,15 @@ class _StatePageState extends State<StatePage> {
       , ),
       body: stateData==null?Center(child:CircularProgressIndicator()): ListView.builder(itemBuilder: (context,index){
         return Container(
-          height:130,
+          height:110,
+          
           margin: EdgeInsets.symmetric(horizontal:8,vertical:10),
           
           decoration: BoxDecoration(
             color: Colors.white,
+            borderRadius : BorderRadius.all(Radius.circular(15)),
             boxShadow: [ BoxShadow(
-              color:Colors.grey[200],
+              color:Colors.grey[300],
               blurRadius:10,
               offset: Offset(0, 12),
             ),
@@ -49,18 +51,54 @@ class _StatePageState extends State<StatePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[Container(
-                    width : 110,
+                    width : 130,
+                    height: 110,
+                    decoration: BoxDecoration(
+        color: primaryBlack,
+       borderRadius : BorderRadius.only( bottomLeft : Radius.circular(15),bottomRight: Radius.circular(2),topLeft: Radius.circular(15),topRight: Radius.circular(2)
+
+       ),
+       
+       boxShadow: [ BoxShadow(
+              color:Colors.grey[200],
+              blurRadius:10,
+              offset: Offset(20, 0),
+            ),
+            ],
+       
+       
+       
+       ),
+                    
+        
                     padding: EdgeInsets.symmetric(horizontal:5,),
-                    child: Text(stateData[index]['state'],style: TextStyle(
-                      fontWeight:FontWeight.bold,
-                      color: primaryBlack,
-                      fontSize: 14,
-                      ),
-                      ),
+                    child: Column(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget> [ Text(stateData[index]['id'].replaceAll(RegExp('IN-'), ''), 
+                      style: TextStyle(
+                        fontWeight:FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 25,
+                        ),
+                        ),
+                        SizedBox(height : 15,),
+                       Text(stateData[index]['state'], 
+                      style: TextStyle(
+                        fontWeight:FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 10,
+                        ),
+                        ),
+
+
+                      ],
+                    ),
                   ),
+                
+                  ]
                   //  Container(child: Image.network(stateData[index]['countryInfo']['flag'],height:90,width:100,)),
                     
-                  ]
+                  
                 ),
               ),
               Expanded(child: Container(

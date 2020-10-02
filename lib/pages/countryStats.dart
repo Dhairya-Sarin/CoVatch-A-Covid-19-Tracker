@@ -46,6 +46,7 @@ class _CountryPageState extends State<CountryPage> {
           child: Row(
             children: <Widget>[
               Container(
+                padding: EdgeInsets.only(left:5,),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[Text(countryData[index]['country'],style: TextStyle(
@@ -54,7 +55,7 @@ class _CountryPageState extends State<CountryPage> {
                     fontSize: 14,
                     ),
                     ),
-                   Container(child: Image.network(countryData[index]['countryInfo']['flag'],height:90,width:100,)),
+                   Container(child: Image.network(countryData[index]['countryInfo']['flag'],height:90,width:100,) ,padding: EdgeInsets.only(),),
                     
                   ]
                 ),

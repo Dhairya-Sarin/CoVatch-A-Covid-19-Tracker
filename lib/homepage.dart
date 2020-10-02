@@ -111,7 +111,7 @@ class _HomepageState extends State<Homepage> {
                       ),
                       child: Center(
                         child: Text(
-                          'REGIONAL',
+                          'GLOBAL',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
@@ -141,7 +141,7 @@ class _HomepageState extends State<Homepage> {
                       ),
                       child: Center(
                         child: Text( 
-                          'INDIA',
+                          'REGIONAL',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,

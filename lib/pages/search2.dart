@@ -33,7 +33,7 @@ class Search2 extends SearchDelegate{
     @override
     Widget buildSuggestions(BuildContext context) {
    final suggestionList2 = query.isEmpty?stateList:stateList.where((element) => element['state'].toString().toLowerCase().startsWith(query)).toList();
-    return ListView.builder(
+    return ListView.builder( 
       itemCount: suggestionList2==null?0:suggestionList2.length,
       itemBuilder: (context,index){
           return Container(

@@ -1,48 +1,42 @@
 import 'package:covid_19/datasource.dart';
-import 'package:covid_19/pages/search2.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-class StatePage extends StatefulWidget {
-  @override
-  _StatePageState createState() => _StatePageState();
-}
+class Search2 extends SearchDelegate{
+  final List stateList ;
 
-class _StatePageState extends State<StatePage> {
-  List stateData;
-  fetchStateData() async {
-    http.Response response = await http
-        .get('https://api.covidindiatracker.com/state_data.json');
-    setState(() {
-      stateData = jsonDecode(response.body);
-    });
-  }
+  Search2(this.stateList);
 
+  
   @override
-  @override
-  void initState() { 
-    fetchStateData();
-    super.initState();
-    
-  }
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-         actions: <Widget>[
-          IconButton(icon: Icon(Icons.search), onPressed: (){
-            showSearch(context: context, delegate: Search2(stateData)
-            
-            
-            );
-          })
-        ],
-        
-        
-        title:Text('Statewise Stats')
-      , ),
-      body: stateData==null?Center(child:CircularProgressIndicator()): ListView.builder(itemBuilder: (context,index){
-        return Container(
+  List<Widget> buildActions(BuildContext context) {
+      
+      return [
+        IconButton(icon:Icon(Icons.clear), onPressed: (){
+          query='';
+        }),
+      ];
+      
+    }
+  
+    @override
+    Widget buildLeading(BuildContext context) {
+      return IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
+      Navigator.pop(context);
+      });
+    }
+  
+    @override
+    Widget buildResults(BuildContext context) {
+      return Container();
+    }
+  
+    @override
+    Widget buildSuggestions(BuildContext context) {
+   final suggestionList2 = query.isEmpty?stateList:stateList.where((element) => element['state'].toString().toLowerCase().startsWith(query)).toList();
+    return ListView.builder(
+      itemCount: suggestionList2==null?0:suggestionList2.length,
+      itemBuilder: (context,index){
+          return Container(
           height:110,
           
           margin: EdgeInsets.symmetric(horizontal:8,vertical:10),
@@ -86,7 +80,7 @@ class _StatePageState extends State<StatePage> {
                     padding: EdgeInsets.symmetric(horizontal:5,),
                     child: Column(
                          mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget> [ Text(stateData[index]['id'].replaceAll(RegExp('IN-'), ''), 
+                      children: <Widget> [ Text(suggestionList2[index]['id'].replaceAll(RegExp('IN-'), ''), 
                       style: TextStyle(
                         fontWeight:FontWeight.bold,
                         color: Colors.white,
@@ -94,7 +88,7 @@ class _StatePageState extends State<StatePage> {
                         ),
                         ),
                         SizedBox(height : 15,),
-                       Text(stateData[index]['state'], 
+                       Text(suggestionList2[index]['state'], 
                       style: TextStyle(
                         fontWeight:FontWeight.bold,
                         color: Colors.white,
@@ -118,28 +112,28 @@ class _StatePageState extends State<StatePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children:<Widget>[
                     SizedBox(height:10),
-                    Text('CONFIRMED : '+ stateData[index]['confirmed'].toString() , 
+                    Text('CONFIRMED : '+ suggestionList2[index]['confirmed'].toString() , 
                     style: TextStyle(
                      color: primaryBlack,
                      fontWeight: FontWeight.bold,
                      fontSize: 12,
                     ),
                     ),
-                       Text('ACTIVE : '+ stateData[index]['active'].toString() , 
+                       Text('ACTIVE : '+ suggestionList2[index]['active'].toString() , 
                     style: TextStyle(
                      color: primaryBlack,
                      fontWeight: FontWeight.bold,
                      fontSize: 12,
                     ),
                     ),
-                       Text('RECOVERED : '+ stateData[index]['recovered'].toString() , 
+                       Text('RECOVERED : '+ suggestionList2[index]['recovered'].toString() , 
                     style: TextStyle(
                      color: Colors.green,
                      fontWeight: FontWeight.bold,
                      fontSize: 12,
                     ),
                     ),
-                       Text('DEATHS : '+ stateData[index]['deaths'].toString() , 
+                       Text('DEATHS : '+ suggestionList2[index]['deaths'].toString() , 
                     style: TextStyle(
                      color: Colors.red,
                      fontWeight: FontWeight.bold,
@@ -154,11 +148,13 @@ class _StatePageState extends State<StatePage> {
             ]
           ),
         );
-      },
-      
-      itemCount: stateData==null?0:stateData.length,
-      ),
 
-    );
+    });
+    
+    
+    
+    
+
   }
+
 }
